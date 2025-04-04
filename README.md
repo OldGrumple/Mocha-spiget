@@ -1,5 +1,8 @@
 # Mocha Spiget
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/212a0036968a403ab3d18c45d553a31f)](https://app.codacy.com/gh/OldGrumple/Mocha-spiget/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/212a0036968a403ab3d18c45d553a31f)](https://app.codacy.com/gh/OldGrumple/Mocha-spiget/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
+
 A JavaScript client for the Spiget API, allowing you to interact with SpigotMC's API in a simple and intuitive way.
 
 ## Installation

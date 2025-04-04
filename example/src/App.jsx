@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { marked } from 'marked'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Docs from './Docs'
 
 // Logo URL (relative to public folder)
@@ -583,101 +583,103 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="flex flex-col gap-4 items-center w-full max-w-7xl px-4">
-        <nav className="sticky top-0 z-50 w-full flex justify-between p-4 bg-dark-darker rounded-lg mb-4 backdrop-blur-sm bg-opacity-90">
-          <Link to="/" className="text-primary hover:underline">Home</Link>
-          <Link to="/docs" className="text-primary hover:underline">Docs</Link>
-        </nav>
-        <Routes>
-          <Route path="/docs" element={<Docs />} />
-          <Route path="/" element={
-            <>
-              <div className="flex justify-center mb-4 w-full rounded-lg p-2">
-                <img src={logoPath} alt="Mocha-spiget Logo" className="w-[150px] h-auto mb-2 transition-transform duration-300 hover:scale-105" />
-              </div>
-              
-              <div className="bg-dark p-6 rounded-lg mb-8 w-full">
-                <h2 className="text-2xl font-bold text-primary mb-4">About Mocha-Spiget Demo</h2>
-                <p className="mb-4">
-                  This demo showcases the <strong>mocha-spiget</strong> package, which provides an easy way to interact with the SpigotMC API. 
-                  You can search for plugins by ID, view the most downloaded plugins, and perform text searches to find plugins by name or description.
-                </p>
-                <p className="mb-4">
-                  Simply enter a resource ID in the search box, or explore the top downloaded plugins to see detailed information about each plugin, 
-                  including author, downloads, ratings, and more. The demo also includes a formatted view and raw JSON view for each plugin.
-                </p>
-                
-                <div className="bg-dark-darker p-4 rounded-lg mb-4">
-                  <h3 className="text-xl font-bold text-white mb-2">How to Use</h3>
-                  <ol className="list-decimal list-inside space-y-2 text-gray-200">
-                    <li>Use the text search to find plugins by name or description</li>
-                    <li>Find a plugin you're interested in</li>
-                    <li>Click on the plugin to view detailed information</li>
-                  </ol>
+    <Router basename="/Mocha-spiget/example">
+      <div className="min-h-screen bg-gray-100">
+        <div className="flex flex-col gap-4 items-center w-full max-w-7xl px-4">
+          <nav className="sticky top-0 z-50 w-full flex justify-between p-4 bg-dark-darker rounded-lg mb-4 backdrop-blur-sm bg-opacity-90">
+            <Link to="/" className="text-primary hover:underline">Home</Link>
+            <Link to="/docs" className="text-primary hover:underline">Docs</Link>
+          </nav>
+          <Routes>
+            <Route path="/docs" element={<Docs />} />
+            <Route path="/" element={
+              <>
+                <div className="flex justify-center mb-4 w-full rounded-lg p-2">
+                  <img src={logoPath} alt="Mocha-spiget Logo" className="w-[150px] h-auto mb-2 transition-transform duration-300 hover:scale-105" />
                 </div>
                 
-                <div className="bg-dark-darker p-4 rounded-lg">
-                  <h3 className="text-xl font-bold text-white mb-2">Example Resources</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                    <div className="p-2 rounded bg-dark">EssentialsX: <span className="text-primary">9089</span></div>
-                    <div className="p-2 rounded bg-dark">WorldEdit: <span className="text-primary">12662</span></div>
-                    <div className="p-2 rounded bg-dark">LuckPerms: <span className="text-primary">28140</span></div>
-                    <div className="p-2 rounded bg-dark">Vault: <span className="text-primary">34315</span></div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="w-full max-w-6xl">
-                {renderSearchTabs()}
-                {error && <div className="bg-red-900/50 text-red-200 p-4 rounded-lg mt-4 w-full">{error}</div>}
-              </div>
-              
-              {resourceData && (
-                <div className="w-full max-w-6xl flex flex-col items-center px-2">
-                  <div className="flex gap-4 mb-8 justify-start w-full p-0 relative">
-                    <button
-                      onClick={() => setActiveTab('formatted')}
-                      className={`py-2 px-4 rounded-lg cursor-pointer border transition-all ${
-                        activeTab === 'formatted' 
-                          ? 'bg-primary text-white border-primary' 
-                          : 'bg-dark border-gray-700 text-gray-400 hover:bg-gray-800'
-                      }`}
-                    >
-                      Formatted View
-                    </button>
-                    <button
-                      onClick={() => setActiveTab('raw')}
-                      className={`py-2 px-4 rounded-lg cursor-pointer border transition-all ${
-                        activeTab === 'raw' 
-                          ? 'bg-primary text-white border-primary' 
-                          : 'bg-dark border-gray-700 text-gray-400 hover:bg-gray-800'
-                      }`}
-                    >
-                      Raw JSON
-                    </button>
+                <div className="bg-dark p-6 rounded-lg mb-8 w-full">
+                  <h2 className="text-2xl font-bold text-primary mb-4">About Mocha-Spiget Demo</h2>
+                  <p className="mb-4">
+                    This demo showcases the <strong>mocha-spiget</strong> package, which provides an easy way to interact with the SpigotMC API. 
+                    You can search for plugins by ID, view the most downloaded plugins, and perform text searches to find plugins by name or description.
+                  </p>
+                  <p className="mb-4">
+                    Simply enter a resource ID in the search box, or explore the top downloaded plugins to see detailed information about each plugin, 
+                    including author, downloads, ratings, and more. The demo also includes a formatted view and raw JSON view for each plugin.
+                  </p>
+                  
+                  <div className="bg-dark-darker p-4 rounded-lg mb-4">
+                    <h3 className="text-xl font-bold text-white mb-2">How to Use</h3>
+                    <ol className="list-decimal list-inside space-y-2 text-gray-200">
+                      <li>Use the text search to find plugins by name or description</li>
+                      <li>Find a plugin you're interested in</li>
+                      <li>Click on the plugin to view detailed information</li>
+                    </ol>
                   </div>
                   
-                  <div className="w-full mt-8 text-left">
-                    {activeTab === 'formatted' ? (
-                      renderFormattedView()
-                    ) : (
-                      <pre className="bg-dark-darker p-4 rounded-lg overflow-x-auto">
-                        {JSON.stringify(resourceData, null, 2)}
-                      </pre>
-                    )}
+                  <div className="bg-dark-darker p-4 rounded-lg">
+                    <h3 className="text-xl font-bold text-white mb-2">Example Resources</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                      <div className="p-2 rounded bg-dark">EssentialsX: <span className="text-primary">9089</span></div>
+                      <div className="p-2 rounded bg-dark">WorldEdit: <span className="text-primary">12662</span></div>
+                      <div className="p-2 rounded bg-dark">LuckPerms: <span className="text-primary">28140</span></div>
+                      <div className="p-2 rounded bg-dark">Vault: <span className="text-primary">34315</span></div>
+                    </div>
                   </div>
                 </div>
-              )}
+                
+                <div className="w-full max-w-6xl">
+                  {renderSearchTabs()}
+                  {error && <div className="bg-red-900/50 text-red-200 p-4 rounded-lg mt-4 w-full">{error}</div>}
+                </div>
+                
+                {resourceData && (
+                  <div className="w-full max-w-6xl flex flex-col items-center px-2">
+                    <div className="flex gap-4 mb-8 justify-start w-full p-0 relative">
+                      <button
+                        onClick={() => setActiveTab('formatted')}
+                        className={`py-2 px-4 rounded-lg cursor-pointer border transition-all ${
+                          activeTab === 'formatted' 
+                            ? 'bg-primary text-white border-primary' 
+                            : 'bg-dark border-gray-700 text-gray-400 hover:bg-gray-800'
+                        }`}
+                      >
+                        Formatted View
+                      </button>
+                      <button
+                        onClick={() => setActiveTab('raw')}
+                        className={`py-2 px-4 rounded-lg cursor-pointer border transition-all ${
+                          activeTab === 'raw' 
+                            ? 'bg-primary text-white border-primary' 
+                            : 'bg-dark border-gray-700 text-gray-400 hover:bg-gray-800'
+                        }`}
+                      >
+                        Raw JSON
+                      </button>
+                    </div>
+                    
+                    <div className="w-full mt-8 text-left">
+                      {activeTab === 'formatted' ? (
+                        renderFormattedView()
+                      ) : (
+                        <pre className="bg-dark-darker p-4 rounded-lg overflow-x-auto">
+                          {JSON.stringify(resourceData, null, 2)}
+                        </pre>
+                      )}
+                    </div>
+                  </div>
+                )}
 
-              {/* Add the JSON modal */}
-              <JsonModal 
-                data={jsonModalData} 
-                onClose={() => setJsonModalData(null)} 
-              />
-            </>
-          } />
-        </Routes>
+                {/* Add the JSON modal */}
+                <JsonModal 
+                  data={jsonModalData} 
+                  onClose={() => setJsonModalData(null)} 
+                />
+              </>
+            } />
+          </Routes>
+        </div>
       </div>
     </Router>
   )

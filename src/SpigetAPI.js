@@ -65,10 +65,6 @@ class SpigetAPI {
         return this.resources.getDownloadUrl(resourceId, options);
     }
 
-    downloadResource(resourceId, versionId, outputPath) {
-        return this.resources.downloadResource(resourceId, versionId, outputPath);
-    }
-
     // Author methods
     getAuthors(options) {
         return this.authors.getAuthors(options);

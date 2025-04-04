@@ -225,18 +225,27 @@ async function getCategoryResources(categoryId) {
 ```javascript
 async function downloadPlugin() {
     try {
-        // Download the latest version of a plugin
+        // Get the download URL for a plugin
         const resourceId = 12345; // Replace with actual resource ID
-        const outputPath = await spiget.downloadResource(resourceId);
-        console.log(`Plugin downloaded to: ${outputPath}`);
+        const downloadUrl = await spiget.getDownloadUrl(resourceId);
+        console.log(`Plugin download URL: ${downloadUrl}`);
         
-        // Download a specific version of a plugin
+        // Get the download URL for a specific version
         const versionId = 67890; // Replace with actual version ID
-        const customPath = './plugins/my_plugin.jar';
-        const customOutputPath = await spiget.downloadResource(resourceId, versionId, customPath);
-        console.log(`Plugin downloaded to: ${customOutputPath}`);
+        const versionDownloadUrl = await spiget.getDownloadUrl(resourceId, { versionId });
+        console.log(`Plugin version download URL: ${versionDownloadUrl}`);
+        
+        // You can then use this URL with your preferred download method
+        // For example, using axios:
+        // const response = await axios({
+        //     method: 'get',
+        //     url: downloadUrl,
+        //     responseType: 'stream'
+        // });
+        // const writer = fs.createWriteStream('./plugins/my_plugin.jar');
+        // response.data.pipe(writer);
     } catch (error) {
-        console.error('Error downloading plugin:', error);
+        console.error('Error getting plugin download URL:', error);
     }
 }
 ```
@@ -454,7 +463,6 @@ async function webhookExample() {
 - `getResourcesForVersions(versions, options)`: Get resources for specific Minecraft versions
 - `searchResources(query, options)`: Search for resources
 - `getDownloadUrl(resourceId, versionId)`: Get the download URL for a resource
-- `downloadResource(resourceId, versionId, outputPath)`: Download a resource to a specified path
 
 ### Authors
 - `getAuthors(options)`: Get a list of authors

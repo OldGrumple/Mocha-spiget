@@ -1,84 +1,84 @@
-const Authors = require('../../src/modules/Authors');
-const axios = require('axios');
+const Authors = require("../../src/modules/Authors");
+const axios = require("axios");
 
 // Mock dependencies
-jest.mock('axios');
+jest.mock("axios");
 
-describe('Authors', () => {
-    let authors;
-    const baseURL = 'https://api.spiget.org/v2';
+describe("Authors", () => {
+  let authors;
+  const baseURL = "https://api.spiget.org/v2";
 
-    beforeEach(() => {
-        // Mock axios.create to return a mock client
-        const mockClient = {
-            get: jest.fn(),
-            post: jest.fn(),
-            delete: jest.fn()
-        };
-        axios.create.mockReturnValue(mockClient);
-        
-        authors = new Authors(baseURL);
-        jest.clearAllMocks();
-    });
+  beforeEach(() => {
+    // Mock axios.create to return a mock client
+    const mockClient = {
+      get: jest.fn(),
+      post: jest.fn(),
+      delete: jest.fn(),
+    };
+    axios.create.mockReturnValue(mockClient);
 
-    describe('getAuthors', () => {
-        it('should fetch authors with correct parameters', async () => {
+    authors = new Authors(baseURL);
+    jest.clearAllMocks();
+  });
+
+  describe("getAuthors", () => {
+    it("should fetch authors with correct parameters", async () => {
+      const mockResponse = { data: [{ id: 1, name: "Test Author" }] };
+      authors.get = jest.fn().mockResolvedValue(mockResponse);
+
+      const options = { page: 1, size: 10 };
+      const result = await authors.getAuthors(options);
+
+      expect(authors.get).toHaveBeenCalledWith("/authors", options);
+      expect(result).toEqual(mockResponse);
+        });
+
+    it("should fetch authors without parameters", async () => {
             const mockResponse = { data: [{ id: 1, name: 'Test Author' }] };
             authors.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const options = { page: 1, size: 10 };
-            const result = await authors.getAuthors(options);
+      const result = await authors.getAuthors();
 
-            expect(authors.get).toHaveBeenCalledWith('/authors', options);
+      expect(authors.get).toHaveBeenCalledWith("/authors", {});
             expect(result).toEqual(mockResponse);
         });
 
-        it('should fetch authors without parameters', async () => {
-            const mockResponse = { data: [{ id: 1, name: 'Test Author' }] };
+    it("should handle empty response", async () => {
+      const mockResponse = { data: [] };
             authors.get = jest.fn().mockResolvedValue(mockResponse);
 
             const result = await authors.getAuthors();
 
-            expect(authors.get).toHaveBeenCalledWith('/authors', {});
-            expect(result).toEqual(mockResponse);
-        });
-
-        it('should handle empty response', async () => {
-            const mockResponse = { data: [] };
-            authors.get = jest.fn().mockResolvedValue(mockResponse);
-
-            const result = await authors.getAuthors();
-
             expect(result).toEqual(mockResponse);
         });
     });
 
-    describe('getAuthor', () => {
-        it('should fetch a specific author with fields', async () => {
-            const mockResponse = { data: { id: 1, name: 'Test Author' } };
+  describe("getAuthor", () => {
+    it("should fetch a specific author with fields", async () => {
+      const mockResponse = { data: { id: 1, name: "Test Author" } };
             authors.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const result = await authors.getAuthor(1, 'id,name');
+      const result = await authors.getAuthor(1, "id,name");
 
             expect(authors.get).toHaveBeenCalledWith('/authors/1', { fields: 'id,name' });
             expect(result).toEqual(mockResponse);
         });
 
-        it('should fetch a specific author without fields', async () => {
+    it("should fetch a specific author without fields", async () => {
             const mockResponse = { data: { id: 1, name: 'Test Author' } };
             authors.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const result = await authors.getAuthor(1);
+      const result = await authors.getAuthor(1);
 
-            expect(authors.get).toHaveBeenCalledWith('/authors/1', {});
+      expect(authors.get).toHaveBeenCalledWith("/authors/1", {});
             expect(result).toEqual(mockResponse);
         });
 
-        it('should handle author not found', async () => {
-            const error = new Error('Author not found');
-            authors.get = jest.fn().mockRejectedValue(error);
+    it("should handle author not found", async () => {
+      const error = new Error("Author not found");
+      authors.get = jest.fn().mockRejectedValue(error);
 
-            await expect(authors.getAuthor(999)).rejects.toThrow('Author not found');
+      await expect(authors.getAuthor(999)).rejects.toThrow("Author not found");
         });
     });
 

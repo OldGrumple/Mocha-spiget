@@ -1,79 +1,79 @@
-const BaseAPI = require('../BaseAPI');
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
+const BaseAPI = require("../BaseAPI");
+const fs = require("fs");
+const path = require("path");
+const axios = require("axios");
 
 class Resources extends BaseAPI {
-    constructor(baseURL) {
-        super(baseURL);
+  constructor(baseURL) {
+    super(baseURL);
+  }
+
+  /**
+   * Get a list of resources
+   * @param {Object} options - Query parameters
+   * @param {number} options.page - Page number
+   * @param {number} options.size - Items per page
+   * @param {string} options.sort - Sort field
+   * @param {string} options.fields - Fields to return, separated by commas
+   * @returns {Promise<Array>} List of resources
+   */
+  async getResources(options = {}) {
+    return this.get("/resources", options);
     }
 
     /**
-     * Get a list of resources
+   * Get a specific resource
+   * @param {number} id - Resource ID
+     * @param {Object} options - Query parameters
+     * @param {string} options.fields - Fields to return, separated by commas
+   * @returns {Promise<Object>} Resource details
+     */
+  async getResource(resourceId, options = {}) {
+    return this.get(`/resources/${resourceId}`, options);
+    }
+
+    /**
+   * Get the author of a resource
+   * @param {number} resourceId - Resource ID
+   * @returns {Promise<Object>} Author details
+     */
+  async getResourceAuthor(resourceId) {
+    return this.get(`/resources/${resourceId}/author`);
+    }
+
+    /**
+   * Get versions of a resource
+     * @param {number} resourceId - Resource ID
      * @param {Object} options - Query parameters
      * @param {number} options.page - Page number
      * @param {number} options.size - Items per page
      * @param {string} options.sort - Sort field
      * @param {string} options.fields - Fields to return, separated by commas
-     * @returns {Promise<Array>} List of resources
+   * @returns {Promise<Array>} List of versions
      */
-    async getResources(options = {}) {
-        return this.get('/resources', options);
+  async getResourceVersions(resourceId, options = {}) {
+    return this.get(`/resources/${resourceId}/versions`, options);
     }
 
     /**
-     * Get a specific resource
-     * @param {number} id - Resource ID
+   * Get a specific version of a resource
+     * @param {number} resourceId - Resource ID
+   * @param {number} versionId - Version ID
      * @param {Object} options - Query parameters
      * @param {string} options.fields - Fields to return, separated by commas
-     * @returns {Promise<Object>} Resource details
+   * @returns {Promise<Object>} Version details
      */
-    async getResource(resourceId, options = {}) {
-        return this.get(`/resources/${resourceId}`, options);
+  async getResourceVersion(resourceId, versionId, options = {}) {
+    return this.get(`/resources/${resourceId}/versions/${versionId}`, options);
     }
 
     /**
-     * Get the author of a resource
+   * Get the latest version of a resource
      * @param {number} resourceId - Resource ID
-     * @returns {Promise<Object>} Author details
+   * @returns {Promise<Object>} Latest version details
      */
-    async getResourceAuthor(resourceId) {
-        return this.get(`/resources/${resourceId}/author`);
-    }
-
-    /**
-     * Get versions of a resource
-     * @param {number} resourceId - Resource ID
-     * @param {Object} options - Query parameters
-     * @param {number} options.page - Page number
-     * @param {number} options.size - Items per page
-     * @param {string} options.sort - Sort field
-     * @param {string} options.fields - Fields to return, separated by commas
-     * @returns {Promise<Array>} List of versions
-     */
-    async getResourceVersions(resourceId, options = {}) {
-        return this.get(`/resources/${resourceId}/versions`, options);
-    }
-
-    /**
-     * Get a specific version of a resource
-     * @param {number} resourceId - Resource ID
-     * @param {number} versionId - Version ID
-     * @param {Object} options - Query parameters
-     * @param {string} options.fields - Fields to return, separated by commas
-     * @returns {Promise<Object>} Version details
-     */
-    async getResourceVersion(resourceId, versionId, options = {}) {
-        return this.get(`/resources/${resourceId}/versions/${versionId}`, options);
-    }
-
-    /**
-     * Get the latest version of a resource
-     * @param {number} resourceId - Resource ID
-     * @returns {Promise<Object>} Latest version details
-     */
-    async getLatestResourceVersion(resourceId) {
-        return this.get(`/resources/${resourceId}/versions/latest`);
+  async getLatestResourceVersion(resourceId) {
+    return this.get(`/resources/${resourceId}/versions/latest`);
     }
 
     /**

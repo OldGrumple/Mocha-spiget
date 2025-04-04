@@ -1,88 +1,88 @@
-const Resources = require('../../src/modules/Resources');
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
+const Resources = require("../../src/modules/Resources");
+const axios = require("axios");
+const fs = require("fs");
+const path = require("path");
 
 // Mock dependencies
-jest.mock('axios');
-jest.mock('fs');
-jest.mock('path');
+jest.mock("axios");
+jest.mock("fs");
+jest.mock("path");
 
-describe('Resources', () => {
-    let resources;
+describe("Resources", () => {
+  let resources;
 
-    beforeEach(() => {
-        resources = new Resources('https://api.spiget.org/v2');
-    });
+  beforeEach(() => {
+    resources = new Resources("https://api.spiget.org/v2");
+  });
 
-    describe('getResources', () => {
-        it('should fetch resources with parameters', async () => {
+  describe("getResources", () => {
+    it("should fetch resources with parameters", async () => {
+      const mockResponse = { data: [{ id: 1, name: "Test Resource" }] };
+      resources.get = jest.fn().mockResolvedValue(mockResponse);
+
+      const options = { page: 1, size: 10 };
+      const result = await resources.getResources(options);
+
+      expect(resources.get).toHaveBeenCalledWith("/resources", options);
+      expect(result).toEqual(mockResponse);
+        });
+
+    it("should fetch resources without parameters", async () => {
             const mockResponse = { data: [{ id: 1, name: 'Test Resource' }] };
             resources.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const options = { page: 1, size: 10 };
-            const result = await resources.getResources(options);
+      const result = await resources.getResources();
 
-            expect(resources.get).toHaveBeenCalledWith('/resources', options);
+      expect(resources.get).toHaveBeenCalledWith("/resources", {});
             expect(result).toEqual(mockResponse);
         });
 
-        it('should fetch resources without parameters', async () => {
-            const mockResponse = { data: [{ id: 1, name: 'Test Resource' }] };
+    it("should handle empty response", async () => {
+      const mockResponse = { data: [] };
             resources.get = jest.fn().mockResolvedValue(mockResponse);
 
             const result = await resources.getResources();
 
-            expect(resources.get).toHaveBeenCalledWith('/resources', {});
-            expect(result).toEqual(mockResponse);
-        });
-
-        it('should handle empty response', async () => {
-            const mockResponse = { data: [] };
-            resources.get = jest.fn().mockResolvedValue(mockResponse);
-
-            const result = await resources.getResources();
-
             expect(result).toEqual(mockResponse);
         });
     });
 
-    describe('getResource', () => {
-        it('should fetch a specific resource with fields', async () => {
-            const mockResponse = { data: { id: 1, name: 'Test Resource' } };
+  describe("getResource", () => {
+    it("should fetch a specific resource with fields", async () => {
+      const mockResponse = { data: { id: 1, name: "Test Resource" } };
             resources.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const result = await resources.getResource(1, { fields: 'id,name' });
+      const result = await resources.getResource(1, { fields: "id,name" });
 
             expect(resources.get).toHaveBeenCalledWith('/resources/1', { fields: 'id,name' });
             expect(result).toEqual(mockResponse);
         });
 
-        it('should fetch a specific resource without fields', async () => {
+    it("should fetch a specific resource without fields", async () => {
             const mockResponse = { data: { id: 1, name: 'Test Resource' } };
             resources.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const result = await resources.getResource(1);
+      const result = await resources.getResource(1);
 
-            expect(resources.get).toHaveBeenCalledWith('/resources/1', {});
+      expect(resources.get).toHaveBeenCalledWith("/resources/1", {});
             expect(result).toEqual(mockResponse);
         });
 
-        it('should handle resource not found', async () => {
-            const error = new Error('Resource not found');
-            resources.get = jest.fn().mockRejectedValue(error);
+    it("should handle resource not found", async () => {
+      const error = new Error("Resource not found");
+      resources.get = jest.fn().mockRejectedValue(error);
 
             await expect(resources.getResource(999)).rejects.toThrow('Resource not found');
         });
     });
 
-    describe('getResourceVersions', () => {
-        it('should fetch resource versions with parameters', async () => {
-            const mockResponse = { data: [{ id: 1, name: 'v1.0.0' }] };
+  describe("getResourceVersions", () => {
+    it("should fetch resource versions with parameters", async () => {
+      const mockResponse = { data: [{ id: 1, name: "v1.0.0" }] };
             resources.get = jest.fn().mockResolvedValue(mockResponse);
 
             const options = { page: 1, size: 10 };
-            const result = await resources.getResourceVersions(1, options);
+      const result = await resources.getResourceVersions(1, options);
 
             expect(resources.get).toHaveBeenCalledWith('/resources/1/versions', options);
             expect(result).toEqual(mockResponse);

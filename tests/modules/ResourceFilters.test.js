@@ -1,35 +1,35 @@
-const ResourceFilters = require('../../src/modules/ResourceFilters');
+const ResourceFilters = require("../../src/modules/ResourceFilters");
 
-describe('ResourceFilters', () => {
-    let filters;
+describe("ResourceFilters", () => {
+  let filters;
 
-    beforeEach(() => {
-        filters = new ResourceFilters('https://api.spiget.org/v2');
-    });
+  beforeEach(() => {
+    filters = new ResourceFilters("https://api.spiget.org/v2");
+  });
 
-    describe('getFreeResources', () => {
-        it('should fetch free resources with valid parameters', async () => {
+  describe("getFreeResources", () => {
+    it("should fetch free resources with valid parameters", async () => {
             const mockResponse = { data: [{ id: 1, name: 'Free Resource', price: 0 }] };
             filters.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const options = { page: 1, size: 10, sort: '-downloads' };
-            const result = await filters.getFreeResources(options);
+      const options = { page: 1, size: 10, sort: "-downloads" };
+      const result = await filters.getFreeResources(options);
 
-            expect(filters.get).toHaveBeenCalledWith('/resources/free', options);
-            expect(result).toEqual(mockResponse);
+      expect(filters.get).toHaveBeenCalledWith("/resources/free", options);
+      expect(result).toEqual(mockResponse);
         });
 
-        it('should fetch free resources without parameters', async () => {
+    it("should fetch free resources without parameters", async () => {
             const mockResponse = { data: [{ id: 1, name: 'Free Resource', price: 0 }] };
             filters.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const result = await filters.getFreeResources();
+      const result = await filters.getFreeResources();
 
-            expect(filters.get).toHaveBeenCalledWith('/resources/free', {});
+      expect(filters.get).toHaveBeenCalledWith("/resources/free", {});
             expect(result).toEqual(mockResponse);
         });
 
-        it('should handle negative page number', async () => {
+    it("should handle negative page number", async () => {
             await expect(filters.getFreeResources({ page: -1 }))
                 .rejects.toThrow('Invalid parameters');
         });
@@ -40,32 +40,32 @@ describe('ResourceFilters', () => {
         });
 
         it('should handle API errors', async () => {
-            const error = new Error('API Error');
-            filters.get = jest.fn().mockRejectedValue(error);
+      const error = new Error("API Error");
+      filters.get = jest.fn().mockRejectedValue(error);
 
-            await expect(filters.getFreeResources()).rejects.toThrow('API Error');
+      await expect(filters.getFreeResources()).rejects.toThrow("API Error");
         });
     });
 
-    describe('getPremiumResources', () => {
-        it('should fetch premium resources with valid parameters', async () => {
+  describe("getPremiumResources", () => {
+    it("should fetch premium resources with valid parameters", async () => {
             const mockResponse = { data: [{ id: 1, name: 'Premium Resource', price: 9.99 }] };
             filters.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const options = { page: 1, size: 10, sort: '-price' };
-            const result = await filters.getPremiumResources(options);
+      const options = { page: 1, size: 10, sort: "-price" };
+      const result = await filters.getPremiumResources(options);
 
-            expect(filters.get).toHaveBeenCalledWith('/resources/premium', options);
+      expect(filters.get).toHaveBeenCalledWith("/resources/premium", options);
             expect(result).toEqual(mockResponse);
         });
 
-        it('should fetch premium resources without parameters', async () => {
+    it("should fetch premium resources without parameters", async () => {
             const mockResponse = { data: [{ id: 1, name: 'Premium Resource', price: 9.99 }] };
             filters.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const result = await filters.getPremiumResources();
+      const result = await filters.getPremiumResources();
 
-            expect(filters.get).toHaveBeenCalledWith('/resources/premium', {});
+      expect(filters.get).toHaveBeenCalledWith("/resources/premium", {});
             expect(result).toEqual(mockResponse);
         });
 
@@ -83,23 +83,23 @@ describe('ResourceFilters', () => {
             const error = new Error('API Error');
             filters.get = jest.fn().mockRejectedValue(error);
 
-            await expect(filters.getPremiumResources()).rejects.toThrow('API Error');
+      await expect(filters.getPremiumResources()).rejects.toThrow("API Error");
         });
     });
 
-    describe('getResourcesByPriceRange', () => {
-        it('should fetch resources by price range with valid parameters', async () => {
-            const mockResponse = { data: [{ id: 1, name: 'Resource', price: 5.99 }] };
+  describe("getResourcesByPriceRange", () => {
+    it("should fetch resources by price range with valid parameters", async () => {
+      const mockResponse = { data: [{ id: 1, name: "Resource", price: 5.99 }] };
             filters.get = jest.fn().mockResolvedValue(mockResponse);
 
-            const options = {
-                min: 1,
-                max: 10,
-                page: 1,
-                size: 10,
-                sort: 'price'
-            };
-            const result = await filters.getResourcesByPriceRange(options);
+      const options = {
+        min: 1,
+        max: 10,
+        page: 1,
+        size: 10,
+        sort: "price",
+      };
+      const result = await filters.getResourcesByPriceRange(options);
 
             expect(filters.get).toHaveBeenCalledWith('/resources/price', options);
             expect(result).toEqual(mockResponse);

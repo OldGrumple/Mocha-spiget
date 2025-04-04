@@ -1,7 +1,4 @@
 const BaseAPI = require("../BaseAPI");
-const fs = require("fs");
-const path = require("path");
-const axios = require("axios");
 
 class Resources extends BaseAPI {
   constructor(baseURL) {

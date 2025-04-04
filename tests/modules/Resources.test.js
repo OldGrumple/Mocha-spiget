@@ -3,10 +3,6 @@ const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 
-// Mock dependencies
-jest.mock("axios");
-jest.mock("fs");
-jest.mock("path");
 
 describe("Resources", () => {
   let resources;

@@ -1,0 +1,39 @@
+{
+  "name": "mocha-spiget",
+  "version": "1.0.0",
+  "description": "A JavaScript client for the Spiget API",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/",
+    "format": "prettier --write \"src/**/*.js\""
+  },
+  "keywords": [
+    "spiget",
+    "spigot",
+    "minecraft",
+    "api",
+    "client"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.7"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OldGrumple/mocha-spiget.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OldGrumple/mocha-spiget/issues"
+  },
+  "homepage": "https://github.com/OldGrumple/mocha-spiget#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

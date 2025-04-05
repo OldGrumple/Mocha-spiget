@@ -5,6 +5,8 @@
 
 A JavaScript client for the Spiget API, allowing you to interact with SpigotMC's API in a simple and intuitive way.
 
+[Demo](https://oldgrumple.github.io/Mocha-spiget/)
+
 ## Installation
 
 ```bash

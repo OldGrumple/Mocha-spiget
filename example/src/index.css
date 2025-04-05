@@ -7,7 +7,7 @@
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-    color-scheme: light dark;
+    color-scheme: dark;
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
   }
@@ -19,6 +19,7 @@
     min-width: 320px;
     min-height: 100vh;
     overflow-y: scroll;
+    background-color: #242424;
   }
 
   #root {
@@ -26,6 +27,7 @@
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
+    width: 100%;
   }
 
   button {
@@ -67,6 +69,30 @@
 }
 
 @layer components {
+  .bg-dark {
+    @apply bg-[#1a1a1a];
+  }
+
+  .bg-dark-darker {
+    @apply bg-[#141414];
+  }
+
+  .text-primary {
+    @apply text-[#646cff];
+  }
+
+  .border-primary {
+    @apply border-[#646cff];
+  }
+
+  .bg-primary {
+    @apply bg-[#646cff];
+  }
+
+  .bg-secondary {
+    @apply bg-[#747dff];
+  }
+
   .logo-container {
     @apply flex justify-center mb-4 w-full rounded-lg p-2;
   }
@@ -229,15 +255,67 @@
   }
 
   .html-content {
-    @apply w-full;
+    @apply prose prose-invert max-w-none;
   }
 
   .html-content a {
-    @apply text-blue-400 no-underline transition-colors;
+    @apply text-blue-400 no-underline hover:text-blue-300 hover:underline;
   }
 
-  .html-content a:hover {
-    @apply text-blue-300 underline;
+  .html-content pre {
+    @apply bg-dark-darker p-4 rounded-lg border border-gray-700;
+  }
+
+  .html-content code {
+    @apply bg-dark-darker px-1 py-0.5 rounded text-sm;
+  }
+
+  .html-content blockquote {
+    @apply border-l-4 border-primary pl-4 italic text-gray-400;
+  }
+
+  .html-content ul,
+  .html-content ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+  }
+
+  .html-content li {
+    margin: 0.5rem 0;
+  }
+
+  .html-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .html-content th,
+  .html-content td {
+    border: 1px solid #333;
+    padding: 0.5rem;
+    text-align: left;
+  }
+
+  .html-content th {
+    background-color: #1a1a1a;
+  }
+
+  .html-content hr {
+    border: none;
+    border-top: 1px solid #333;
+    margin: 1.5rem 0;
+  }
+
+  .html-content strong,
+  .html-content b {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .html-content em,
+  .html-content i {
+    font-style: italic;
   }
 
   .resource-meta {
@@ -266,122 +344,22 @@
   }
 }
 
-/* Markdown Content Styles */
-.html-content h1,
-.html-content h2,
-.html-content h3,
-.html-content h4,
-.html-content h5,
-.html-content h6 {
-  color: #646cff;
-  margin: 1.5rem 0 1rem 0;
-  line-height: 1.2;
-}
-
-.html-content h1 { font-size: 2em; }
-.html-content h2 { font-size: 1.5em; }
-.html-content h3 { font-size: 1.3em; }
-.html-content h4 { font-size: 1.1em; }
-.html-content h5 { font-size: 1em; }
-.html-content h6 { font-size: 0.9em; }
-
-.html-content p {
-  margin: 1rem 0;
-  line-height: 1.6;
-}
-
-.html-content code {
-  background-color: #1a1a1a;
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 0.9em;
-}
-
-.html-content pre {
-  background-color: #1a1a1a;
-  padding: 1rem;
-  border-radius: 8px;
-  overflow-x: auto;
-  margin: 1rem 0;
-}
-
-.html-content pre code {
-  background-color: transparent;
-  padding: 0;
-  border-radius: 0;
-}
-
-.html-content blockquote {
-  border-left: 4px solid #646cff;
-  margin: 1rem 0;
-  padding-left: 1rem;
-  color: #888;
-}
-
-.html-content ul,
-.html-content ol {
-  margin: 1rem 0;
-  padding-left: 2rem;
-}
-
-.html-content li {
-  margin: 0.5rem 0;
-}
-
-.html-content table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1rem 0;
-}
-
-.html-content th,
-.html-content td {
-  border: 1px solid #333;
-  padding: 0.5rem;
-  text-align: left;
-}
-
-.html-content th {
-  background-color: #1a1a1a;
-}
-
-.html-content hr {
-  border: none;
-  border-top: 1px solid #333;
-  margin: 1.5rem 0;
-}
-
-.html-content strong,
-.html-content b {
-  color: #fff;
-  font-weight: 600;
-}
-
-.html-content em,
-.html-content i {
-  font-style: italic;
-}
-
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .resources-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 }
 
 @media (max-width: 900px) {
   .resources-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
 }
 
 @media (max-width: 640px) {
   .resources-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
   }
   
   .resource-card {

@@ -583,8 +583,8 @@ function App() {
   };
 
   return (
-    <Router basename="/Mocha-spiget/example">
-      <div className="min-h-screen bg-gray-100">
+    <Router>
+      <div className="min-h-screen bg-[#242424]">
         <div className="flex flex-col gap-4 items-center w-full max-w-7xl px-4">
           <nav className="sticky top-0 z-50 w-full flex justify-between p-4 bg-dark-darker rounded-lg mb-4 backdrop-blur-sm bg-opacity-90">
             <Link to="/" className="text-primary hover:underline">Home</Link>
